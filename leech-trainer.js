@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         WaniKani Leech Trainer
-// @version      1.0.1
+// @version      1.0.2
 // @description  Study and quiz yourself on your leeches!
 // @require      https://greasyfork.org/scripts/19781-wanakana/code/WanaKana.js?version=126349
 // @author       hitechbunny
@@ -202,7 +202,7 @@
             render(JSON.parse(localStorage.leech_train_cache));
         }
         get_api_key().then(function() {
-            ajax_retry('https://wanikanitools-golang.curiousattemptbunny.com/leeches/lesson?api_key='+api_key).then(function(json) {
+            ajax_retry('https://wanikanitools-golang.curiousattemptbunny.com/leeches/lesson?api_key='+api_key, {timeout: 0}).then(function(json) {
                 clear();
                 render(json);
             });
@@ -342,7 +342,7 @@
                 }
             });
             console.log(trainedLeeches);
-            ajax_retry('https://wanikanitools-golang.curiousattemptbunny.com/leeches/trained?api_key='+api_key, {data: JSON.stringify(trainedLeeches), method: 'POST'}).then(function(json) {
+            ajax_retry('https://wanikanitools-golang.curiousattemptbunny.com/leeches/trained?api_key='+api_key, {data: JSON.stringify(trainedLeeches), method: 'POST', timeout: 0}).then(function(json) {
                 console.log(json);
                 delete window.localStorage['leeches-trained'];
             });
