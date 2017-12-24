@@ -2,7 +2,7 @@
 // @name        WaniKani SRS Level Progress
 // @namespace   hitechbunny
 // @description Review schedule explorer for WaniKani
-// @version     1.2.1
+// @version     1.2.2
 // @include     https://www.wanikani.com/dashboard
 // @include     https://www.wanikani.com/
 // @include     https://www.wanikani.com/review
@@ -109,6 +109,11 @@
                 }
             })
             .fail(function(xhr, status, error){
+                if (xhr.status == 401) {
+                    console.log("Unauthorized. Clearing api key from local storage.");
+                    delete localStorage.apiKey_v2;
+                    reject();
+                }
                 //console.log(status, error);
                 if ((status === 'error' || status === 'timeout') && --retries > 0) {
                     //console.log("fail", status, error);
